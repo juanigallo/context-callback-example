@@ -1,25 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// Componente Padre
+
+import React, { useState } from "react";
+import "./App.css";
+import A from "./components/a";
+import Random from "./components/Random";
+
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 function App() {
+  const [theme, setTheme] = useState("light");
+
+  function handleTheme() {
+    if (theme == "light") {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  }
+
+  const themeContextData = {
+    theme,
+    handleTheme
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <ThemeProvider value={themeContextData}>
+        <p>Theme actual: {theme}</p>
+        <A />
+        <Random />
+      </ThemeProvider>
+    </>
   );
 }
 
